@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:session_4/providers/counter_provider.dart';
-import 'package:session_4/screens/first_screen.dart';
+import 'package:session_4/screens/second_screen.dart';
 
 void main() {
   runApp(const App());
@@ -17,7 +17,7 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => CounterProvider()),
       ],
       child: const MaterialApp(
-        home: FirstScreen(),
+        home: SecondScreen(),
       ),
     );
   }

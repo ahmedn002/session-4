@@ -1,35 +1,64 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:session_4/providers/counter_provider.dart';
+import 'package:session_4/screens/containeraya.dart';
 
-class SecondScreen extends StatelessWidget {
+class SecondScreen extends StatefulWidget {
   const SecondScreen({
     super.key,
   });
 
   @override
+  State<SecondScreen> createState() => _SecondScreenState();
+}
+
+class _SecondScreenState extends State<SecondScreen> {
+  final PageController _pageController = PageController(
+    initialPage: 3,
+  );
+
+  @override
   Widget build(BuildContext context) {
-    return Consumer<CounterProvider>(builder: (context, counterProvider, _) {
-      return Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text('Screen 2'),
-              Text('You have pushed the button this many times:'),
-              Text('${counterProvider.counter}'),
-              ElevatedButton(
-                onPressed: counterProvider.increment,
-                child: Text('Increment'),
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Expanded(
+              child: PageView(
+                controller: _pageController,
+                padEnds: true,
+                children: [
+                  for (int i = 0; i < 100; i++) Center(child: Containeraya(index: i)),
+                ],
               ),
-              ElevatedButton(
-                onPressed: () {},
-                child: Text('Go Back'),
-              ),
-            ],
-          ),
+            ),
+            Row(
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    _pageController.animateToPage(1, duration: Duration(milliseconds: 500), curve: Curves.linear);
+                  },
+                  child: Text('Previous'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    _pageController.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                  child: Text('Next'),
+                ),
+              ],
+            )
+          ],
         ),
-      );
-    });
+      ),
+    );
+  }
+
+  Widget _myContainer() {
+    return Container(
+      color: Colors.blue,
+    );
   }
 }
